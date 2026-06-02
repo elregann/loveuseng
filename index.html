@@ -114,6 +114,28 @@
             0% { transform: translateY(0) scale(1) rotate(0deg); opacity: 1; }
             100% { transform: translateY(-200px) scale(1.5) rotate(20deg); opacity: 0; }
         }
+        /* ✨ TAMBAHKAN INI UNTUK EFEK KEMBANG API ✨ */
+        @keyframes fireworkBurst {
+            0% { 
+                transform: translate(0, 0) scale(0.5) rotate(0deg); 
+                opacity: 1; 
+            }
+            50% {
+                opacity: 1;
+            }
+            100% { 
+                transform: translate(var(--tx), var(--ty)) scale(1.8) rotate(360deg); 
+                opacity: 0; 
+            }
+        }
+
+        .firework-emoji {
+            position: fixed;
+            font-size: 2rem;
+            pointer-events: none;
+            z-index: 9999;
+            animation: fireworkBurst 1.5s ease-out forwards;
+        }
         .floating-emoji {
             position: fixed; font-size: 2rem; pointer-events: none; z-index: 9999;
             animation: floatUp 2s ease-out forwards;
@@ -521,11 +543,33 @@
             showModal("card-modal");
             document.querySelector('#card-modal .modal-content').scrollTop = 0;
 
-            confetti({
-                particleCount: 80, spread: 70, origin: { y: 0.6 },
-                colors: ['#b19cd9', '#98d8c8', '#ffb7b2', '#ffd1dc'],
-                shapes: ['circle', 'square']
-            });
+            // ✨ CEK KHUSUS: Jika ini Kartu ke-2 (Ulang Tahun) ✨
+            if (index === 2) {
+                // 1. Picu ledakan confetti besar dari seluruh layar
+                triggerGrandConfetti();
+                
+                // 2. Tambahkan semburan emoji seperti kembang api dari posisi kartu
+                const rect = document.querySelector('.memory-card:nth-child(2)').getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                const bdayEmojis = ["🎂", "🎉", "🎈", "🎁", "✨", "💜", "🎊"];
+                
+                // Ledakkan 30 emoji ke segala arah seperti kembang api
+                for (let i = 0; i < 30; i++) {
+                    setTimeout(() => {
+                        const randomEmoji = bdayEmojis[Math.floor(Math.random() * bdayEmojis.length)];
+                        createFireworkEmoji(randomEmoji, centerX, centerY);
+                    }, i * 40); // Muncul berurutan cepat seperti ledakan
+                }
+            } 
+            // ✨ Untuk kartu lainnya, tetap pakai efek elegan biasa ✨
+            else {
+                confetti({
+                    particleCount: 80, spread: 70, origin: { y: 0.6 },
+                    colors: ['#b19cd9', '#98d8c8', '#ffb7b2', '#ffd1dc'],
+                    shapes: ['circle', 'square']
+                });
+            }
         }
 
         function sendKiss(event) {
@@ -590,6 +634,38 @@
             
             document.body.appendChild(el);
             setTimeout(() => { el.remove(); }, 2000);
+        }
+
+        // ✨ TAMBAHKAN INI: Fungsi untuk emoji kembang api yang menyebar ke segala arah ✨
+        function createFireworkEmoji(emojiChar, centerX, centerY) {
+            const el = document.createElement("div");
+            el.classList.add("firework-emoji");
+            el.innerText = emojiChar;
+            
+            // Hitung arah random (0-360 derajat) - biar menyebar ke segala arah
+            const angle = Math.random() * Math.PI * 2;
+            // Hitung jarak ledakan (150-350px) - biar tidak menumpuk
+            const distance = 150 + Math.random() * 200;
+            // Hitung posisi akhir berdasarkan sudut dan jarak
+            const tx = Math.cos(angle) * distance;
+            const ty = Math.sin(angle) * distance;
+            
+            // Set posisi awal di titik pusat ledakan
+            el.style.left = centerX + "px";
+            el.style.top = centerY + "px";
+            
+            // Kirim variabel arah ke CSS untuk animasi
+            el.style.setProperty("--tx", tx + "px");
+            el.style.setProperty("--ty", ty + "px");
+            
+            // Variasi ukuran emoji (1.5rem - 3rem) biar terlihat dinamis
+            const size = 1.5 + Math.random() * 1.5;
+            el.style.fontSize = size + "rem";
+            
+            document.body.appendChild(el);
+            
+            // Hapus elemen setelah animasi selesai (1.5 detik)
+            setTimeout(() => { el.remove(); }, 1500);
         }
 
         function triggerGrandConfetti() {
