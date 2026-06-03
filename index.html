@@ -429,10 +429,14 @@
         <div class="modal-content" onclick="event.stopPropagation()">
             <button class="modal-close" onclick="closeModal('hint-modal')">&times;</button>
             <h3>💡 Petunjuk Kecil</h3>
-            <p>Ingat hari pertama kali kita saling mengirim pesan? Itu adalah awal dari semuanya.<br><br>
-            Format sandi yang diterima:<br>
-            <b style="color:var(--lavender-dark); font-size:1.3rem;">050423</b><br>
-            (Atau: 5 April 2023, 5-4-2023, 5042023)</p>
+            <p style="margin-bottom: 20px; font-style: italic;">
+                "Semua berawal dari dua tanggal istimewa: hari kamu lahir ke dunia, dan hari kita pertama kali saling menyapa. Salah satu dari keduanya adalah kunci untuk membuka ruang kecil ini."
+            </p>
+            <p style="font-size: 0.95rem; color: var(--text-soft);">
+                Format sandi yang diterima:<br>
+                <b style="color:var(--lavender-dark); font-size:1.2rem;">050602</b> atau <b style="color:var(--lavender-dark); font-size:1.2rem;">050423</b><br>
+                <span style="font-size: 0.85rem;">(5 juni 2002 dan 5 april 2023 juga bisa ko haha)</span>
+            </p>
         </div>
     </div>
 
@@ -448,7 +452,7 @@
         <div class="modal-content" onclick="event.stopPropagation()">
             <button class="modal-close" onclick="closeModal('surprise-modal')">&times;</button>
             <h3>🎁 Janji Manisku</h3>
-            <p>Aku berjanji, mungkin tahun ini atau tahun yang akan datang aku akan benar-benar berusaha untuk bertemu. Entah aku harus naik bus, pesawat, atau bahkan berjalan kaki menyeberang pulau, aku akan melakukan apa pun. Aku ingin melihat senyummu secara langsung, mencium keningmu, dan memelukmu erat, bukan lagi lewat layar dingin ini. Terima kasih sudah setia menanti, Seng. <i>I love you, lebih dari yang bisa diungkapkan oleh kata-kata manapun.</i></p>
+            <p>Mungkin tahun ini atau tahun yang akan datang aku akan benar-benar berusaha untuk bertemu. Entah aku harus naik bus, pesawat, atau bahkan berjalan kaki menyeberang pulau, aku akan melakukan apa pun. Aku ingin melihat senyummu secara langsung, mencium keningmu, dan memelukmu erat, bukan lagi lewat layar dingin ini. Terima kasih sudah setia menanti, Seng. <i>I love you, lebih dari yang bisa diungkapkan oleh kata-kata manapun.</i></p>
         </div>
     </div>
 
@@ -463,7 +467,7 @@
     <div id="toast">Notifikasi</div>
 
     <script>
-        const validPasswords = ["050423", "5 april 2023", "5-4-2023", "5042023", "5 april", "0504"];
+        const validPasswords = ["050423", "5 april 2023", "050602", "5 juni 2002"];
         const startDate = new Date("2023-04-05T00:00:00").getTime();
         let kissCount = 0;
 
